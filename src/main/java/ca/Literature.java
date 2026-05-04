@@ -30,6 +30,9 @@ public class Literature {
     //toString-metod
     @Override
     public String toString(){
-        return "Literatur: Id-" + this.id + ", Title-" + this.title + ", Availabile-" + this.isAvailable;
+        return 
+        "Literatur: Id-" + this.id + 
+        ", Title-" + this.title + 
+        ", Availabile-" + this.isAvailable;
     }
 }
