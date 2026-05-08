@@ -31,7 +31,7 @@ public class Literature {
     @Override
     public String toString(){
         return 
-        "Literatur: Id-" + this.id + 
+        "Id-" + this.id + 
         ", Title-" + this.title + 
         ", Availabile-" + this.isAvailable;
     }
