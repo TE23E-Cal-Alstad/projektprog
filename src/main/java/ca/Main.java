@@ -5,6 +5,9 @@ package ca;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+
 
 public class Main {
 
@@ -19,29 +22,39 @@ public class Main {
         
             //3. Programmet körs i loop
             while(running){
-                //5. Meny 
-                IO.println("\n ---Bibliotek---");
-                IO.println("1. Hämta bok");
-                IO.println("2. Hämta magazin");
-                IO.println("3. Visa Böcker");
-                IO.println("4. Visa magazin");
-                IO.println("5. Lägg till bok");
-                IO.println("6. Lägg till tidning");
-                IO.println("7. Avsluta");
-                int val = Integer.parseInt( IO.readln("Ange val: "));
+                //5. Meny
+                
+                System.out.println("\n ---Bibliotek---");
+                System.out.println("1. Hämta bok");
+                System.out.println("2. Hämta magazin");
+                System.out.println("3. Visa Böcker");
+                System.out.println("4. Visa magazin");
+                System.out.println("5. Lägg till bok");
+                System.out.println("6. Lägg till tidning");
+                System.out.println("7. Avsluta");
+                int val = Integer.parseInt( System.out.readln("Ange val: "));
           
 
             //4. Kolla användares val
             switch(val){
-                case "1"-> hämtaBöcker();
-                case "2" -> hämtaMagazin();
+                case "1"-> {
+                    HttpHelper.getBooks();
+                    /*
+                     Skapa en typ som besrkiverArrayLirt<Books>
+                    Type typ_arr_books = new TypeToken<ArrayList<Books>>(){}.getType(); 
+                            Gson gson = new Gson();
+                        ArrayList<Books>    books = gson.fromJson(json_data, typ_arr_books);
+                */
+                }
+                case "2" -> getMagazines();
                 case "3" -> visaBöcker();
                 case "4" -> VisaMagazin();
                 case "5" -> läggTillBok();
                 case "6" -> läggTillMagazin();
                 case "7" -> running = false;
-                default -> IO.println("Fel: Ange ett nummer mellan 1-7");
+                default -> System.out.println("Fel: Ange ett nummer mellan 1-7");
             }
           }
+
     }
 }

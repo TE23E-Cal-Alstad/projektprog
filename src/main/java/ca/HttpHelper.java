@@ -2,39 +2,34 @@
 // Filen innehåller hjälpklass för http Get
 package ca;
 
-import java.io.BufferedReader;      //Läser text rad för rad
-import java.io.InputStreamReader;   //Gör om bytes -> text
-import java.net.HttpURLConnection;  //Kopplar upp mot server
 import java.net.URL;                //Håller webbadressen
+import java.util.ArrayList;
+import com.google.gson.reflect.TypeToken;
+import kong.unirest.*;
+import java.lang.reflect.Type;
+import com.google.gson.*;
 
 public class HttpHelper {
 
     //Hämtar text från URL och ger tbx text
-    public static String get(String urlString) {
+    public static String getBooks() {
         try {
             //Gör om till URL objekt
-            URL url = new URL(urlString); 
+            String  url = "http://10.151.168.5:3128/books" ;
             //Öppnar koppling till server
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            //säger att göra Get anropp
-            conn.setRequestMethod("GET");
+            HttpResponse<String> response = Unirest(url).asString();
 
-            //Skapar en läsare för texten servern skickar tbx
-            BufferedReader läsare = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream())
-            );
-
+            String json_data = response.getBody();
             //Sparar text läst från servern
-            StringBuilder stringBuild = new StringBuilder();
-            String rad;
 
-            //Läser tills ingen mer text
-            while ((rad = läsare.readLine()) != null) {
-                stringBuild.append(rad); //Lägger till raden i text
-            }
+            // ska hämta Böcker
+            ArrayList<Books> books;
 
-            läsare.close();
-            return stringBuild.toString();
+            // Skapa en typ som besrkiverArrayLirt<Books>
+            Type typ_arr_books = new TypeToken<ArrayList<Books>>(){}.getType(); 
+
+            Gson gson = new Gson();
+            books = gson.fromJson(json_data, typ_arr_books);
 
         } catch (Exception e) {
             System.out.println("Fel vid GET: " + e.getMessage());
