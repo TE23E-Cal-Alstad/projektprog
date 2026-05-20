@@ -56,10 +56,10 @@ public class Main {
                     String json = HttpHelper.getMagazines();
                     
                     if (json != null) {
-                    Gson gson = new Gson();
-                    Type typ_arr_magazine = new TypeToken<ArrayList<Magazines>>(){}.getType(); 
-                    magazines = gson.fromJson(json, typ_arr_magazine);
-                    System.out.println("Tidningar har hämtats!");
+                        Gson gson = new Gson();
+                        Type typ_arr_magazine = new TypeToken<ArrayList<Magazines>>(){}.getType(); 
+                        magazines = gson.fromJson(json, typ_arr_magazine);
+                        System.out.println("Tidningar har hämtats!");
                     }
                 }
                 case "3" -> {
@@ -76,27 +76,33 @@ public class Main {
                 }
                 case "5" -> {
                     //Lägger till ett nytt objekt direkt i books-listan
-                    books.add(new Books(
-                    System.console().readLine("ID: "),
-                    System.console().readLine("Titel: "),
-                    true,
-                    System.console().readLine("Författare: "),
-                    System.console().readLine("Genre (Crime, Drama, Mystery, Adventure, Romance, Fantasy, Thriller och Science Fiction): "),
-                    Integer.parseInt(System.console().readLine("Sidor: "))
-                    ));
-                    System.out.println("Boken sparad lokalt i listan!");
+                    try {
+                        String id = System.console().readLine("ID: ");
+                        String titel = System.console().readLine("Titel: ");
+                        String forfattare = System.console().readLine("Författare: ");
+                        String genre = System.console().readLine("Genre (Crime, Drama, Mystery, Adventure, Romance, Fantasy, Thriller och Science Fiction): ");
+                        int sidor = Integer.parseInt(System.console().readLine("Sidor: "));
+
+                        books.add(new Books(id, titel, true, forfattare, genre, sidor));
+                        System.out.println("Boken sparad lokalt i listan!");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Fel: Du måste ange ett heltal (siffror) för antal sidor. Försök igen.");
+                    }
                 }
                 case "6" -> {
                     // Lägger till ett nytt objekt direkt i magazines-listan
-                    magazines.add(new Magazines(
-                    System.console().readLine("ID: "),
-                    System.console().readLine("Titel: "),
-                    true,
-                    Integer.parseInt(System.console().readLine("Nummer: ")),
-                    System.console().readLine("Kategori: "),
-                    Integer.parseInt(System.console().readLine("År: "))
-                    ));
-                    System.out.println("Tidningen sparad lokalt i listan!");
+                   try {
+                        String id = System.console().readLine("ID: ");
+                        String titel = System.console().readLine("Titel: ");
+                        int nummer = Integer.parseInt(System.console().readLine("Nummer: "));
+                        String kategori = System.console().readLine("Kategori: ");
+                        int ar = Integer.parseInt(System.console().readLine("År: "));
+
+                        magazines.add(new Magazines(id, titel, true, nummer, kategori, ar));
+                        System.out.println("Tidningen sparad lokalt i listan!");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Fel: Du måste ange heltal (siffror) för Nummer och År. Försök igen.");
+                    }
                 }
                 case "7" -> running = false;
                 default -> System.out.println("Fel: Ange ett nummer mellan 1-7");
